@@ -1,12 +1,13 @@
 Phase 1 : Requirement Analysis
-    - 01_PROJECT_OVERVIEW
-    - 02_DATASET_PLAN
+    - 01_PROJECT_OVERVIEW    [V]
+    - 02_DATASET_PLAN        [V]
 
 Phase 2 : Design
-    - 03_PREPROCESSING_GUIDE
-    - 04_MODEL_TRAINING
+    - 03_PREPROCESSING_GUIDE [V]
+    - 04_MODEL_TRAINING      [V]
 
 Phase 3 : Implementation
+    - eksperiment.ipynb      [V]
     - modelling.py
     - automate.py
     - MLflow

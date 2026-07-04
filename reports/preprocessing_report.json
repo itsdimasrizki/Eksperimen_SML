@@ -1,0 +1,19 @@
+{
+    "original_rows": 1025,
+    "processed_rows": 302,
+    "duplicates_removed": 723,
+    "missing_values": 0,
+    "train_shape": [
+        211,
+        30
+    ],
+    "validation_shape": [
+        45,
+        30
+    ],
+    "test_shape": [
+        46,
+        30
+    ],
+    "random_state": 42
+}

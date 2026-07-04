@@ -1,7 +1,7 @@
 # Submission Checklist
 
 ## Kriteria 1
-- [ ] Notebook eksperimen
+- [V] Notebook eksperimen
 - [ ] automate.py
 - [ ] GitHub Actions preprocessing
 

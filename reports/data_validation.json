@@ -1,0 +1,9 @@
+{
+    "dataset_shape": [
+        1025,
+        14
+    ],
+    "missing_columns": [],
+    "additional_columns": [],
+    "duplicate_columns": 0
+}
