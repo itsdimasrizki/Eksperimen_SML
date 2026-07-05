@@ -35,6 +35,7 @@ Proyek end-to-end machine learning untuk submission Dicoding.
 │   ├── tuning_metrics.json
 │   └── tuning_roc_curve.png
 ├── conda.yaml
+├── coverage.xml
 ├── data
 │   ├── interim
 │   │   └── heart_cleaned.csv
@@ -147,9 +148,11 @@ Proyek end-to-end machine learning untuk submission Dicoding.
 │   ├── best_model.pkl
 │   └── model_metadata.json
 ├── monitoring
-│   └── prometheus.yml
+│   └── data
+│       └── queries.active
 ├── notebook
 │   └── eksperimen.ipynb
+├── pytest.ini
 ├── README.md
 ├── reports
 │   ├── data_validation.json
@@ -158,14 +161,65 @@ Proyek end-to-end machine learning untuk submission Dicoding.
 │   ├── model_comparison.csv
 │   ├── outlier_report.json
 │   └── preprocessing_report.json
+├── requirements-dev.txt
 ├── requirements.txt
-└── src
-    ├── app.py
-    ├── automate.py
-    ├── inference.py
-    ├── mlflow_tracking.py
-    ├── modelling.py
-    ├── modelling_tuning.py
-    └── prometheus_exporter.py
+├── src
+│   ├── app.py
+│   ├── automate.py
+│   ├── helpers
+│   │   ├── inference_helper.py
+│   │   ├── __init__.py
+│   │   ├── loader.py
+│   │   ├── __pycache__
+│   │   │   ├── inference_helper.cpython-314.pyc
+│   │   │   ├── __init__.cpython-314.pyc
+│   │   │   ├── loader.cpython-314.pyc
+│   │   │   ├── response.cpython-314.pyc
+│   │   │   └── validation.cpython-314.pyc
+│   │   ├── response.py
+│   │   └── validation.py
+│   ├── inference.py
+│   ├── mlflow_tracking.py
+│   ├── modelling.py
+│   ├── modelling_tuning.py
+│   ├── monitoring
+│   │   ├── alert_rules.yml
+│   │   ├── collectors.py
+│   │   ├── data
+│   │   │   ├── chunks_head
+│   │   │   ├── queries.active
+│   │   │   └── wal
+│   │   │       └── 00000000
+│   │   ├── __init__.py
+│   │   ├── metrics.py
+│   │   ├── monitoring_helper.py
+│   │   ├── prometheus.yml
+│   │   └── __pycache__
+│   │       ├── collectors.cpython-314.pyc
+│   │       ├── __init__.cpython-314.pyc
+│   │       ├── metrics.cpython-314.pyc
+│   │       └── monitoring_helper.cpython-314.pyc
+│   ├── prometheus_exporter.py
+│   └── __pycache__
+│       ├── app.cpython-314.pyc
+│       ├── automate.cpython-314.pyc
+│       ├── inference.cpython-314.pyc
+│       ├── mlflow_tracking.cpython-314.pyc
+│       ├── modelling.cpython-314.pyc
+│       └── prometheus_exporter.cpython-314.pyc
+└── test
+    ├── conftest.py
+    ├── __init__.py
+    ├── __pycache__
+    │   ├── conftest.cpython-314-pytest-9.1.1.pyc
+    │   ├── __init__.cpython-314.pyc
+    │   ├── test_inference.cpython-314-pytest-9.1.1.pyc
+    │   ├── test_mlflow.cpython-314-pytest-9.1.1.pyc
+    │   ├── test_preprocessing.cpython-314-pytest-9.1.1.pyc
+    │   └── test_training.cpython-314-pytest-9.1.1.pyc
+    ├── test_inference.py
+    ├── test_mlflow.py
+    ├── test_preprocessing.py
+    └── test_training.py
 
-37 directories, 108 files
+48 directories, 151 files
