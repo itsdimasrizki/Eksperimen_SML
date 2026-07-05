@@ -1,0 +1,17 @@
+.git
+.github
+__pycache__/
+*.pyc
+
+notebook/
+logs/
+mlruns/
+coverage.xml
+
+monitoring/data/
+
+data/raw/
+
+image/
+
+docs/
