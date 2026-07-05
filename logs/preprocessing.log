@@ -49,3 +49,7 @@ Name: proportion, dtype: float64
 2026-07-05 16:34:56,774 | INFO | PREPROCESSING FINISHED SUCCESSFULLY
 2026-07-05 16:34:56,774 | INFO | ============================================================
 2026-07-05 16:34:56,774 | INFO | Execution time : 0.08 seconds
+2026-07-05 19:49:20,348 | INFO | Building preprocessing pipeline...
+2026-07-05 19:49:20,348 | INFO | Preprocessor created successfully.
+2026-07-05 19:49:20,349 | INFO | Numerical features : ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
+2026-07-05 19:49:20,349 | INFO | Categorical features : ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal']

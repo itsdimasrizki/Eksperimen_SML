@@ -100,3 +100,5 @@ TypeError: RocCurveDisplay.__init__() got an unexpected keyword argument 'estima
 2026-07-05 17:25:46,091 | INFO | ============================================================
 2026-07-05 17:25:46,091 | INFO | TRAINING FINISHED SUCCESSFULLY
 2026-07-05 17:25:46,091 | INFO | ============================================================
+2026-07-05 19:49:20,349 | INFO | Building baseline model...
+2026-07-05 19:49:20,350 | INFO | Baseline model created.
