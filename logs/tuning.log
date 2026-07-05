@@ -1,0 +1,35 @@
+2026-07-05 17:35:35,604 | INFO | ============================================================
+2026-07-05 17:35:35,604 | INFO | STARTING MODEL TUNING
+2026-07-05 17:35:35,604 | INFO | ============================================================
+2026-07-05 17:35:35,606 | INFO | Loaded X_train.csv (211, 30)
+2026-07-05 17:35:35,607 | INFO | Loaded X_val.csv (45, 30)
+2026-07-05 17:35:35,608 | INFO | Loaded X_test.csv (46, 30)
+2026-07-05 17:35:35,608 | INFO | Loaded y_train.csv (211, 1)
+2026-07-05 17:35:35,608 | INFO | Loaded y_val.csv (45, 1)
+2026-07-05 17:35:35,609 | INFO | Loaded y_test.csv (46, 1)
+2026-07-05 17:35:35,609 | INFO | Train shape : (211, 30)
+2026-07-05 17:35:35,609 | INFO | Validation shape : (45, 30)
+2026-07-05 17:35:35,609 | INFO | Test shape : (46, 30)
+2026-07-05 17:35:35,609 | INFO | Loading baseline_model.pkl
+2026-07-05 17:35:35,643 | INFO | Baseline Validation F1 : 0.8679
+2026-07-05 17:35:35,643 | INFO | Starting hyperparameter tuning...
+2026-07-05 17:35:42,291 | INFO | Best CV Score : 0.8602
+2026-07-05 17:35:42,291 | INFO | Best Parameters : {'n_estimators': 500, 'min_samples_split': 5, 'min_samples_leaf': 1, 'max_features': 'log2', 'max_depth': 20, 'bootstrap': True}
+2026-07-05 17:35:42,335 | INFO | Tuned Validation F1 : 0.8519
+2026-07-05 17:35:42,335 | WARNING | Baseline model performs better.
+2026-07-05 17:35:42,335 | INFO | Evaluating best model on test dataset...
+2026-07-05 17:35:42,350 | INFO | accuracy : 0.7391
+2026-07-05 17:35:42,350 | INFO | precision : 0.8421
+2026-07-05 17:35:42,350 | INFO | recall : 0.6400
+2026-07-05 17:35:42,350 | INFO | f1_score : 0.7273
+2026-07-05 17:35:42,350 | INFO | roc_auc : 0.8467
+2026-07-05 17:35:42,354 | INFO | Saved tuning_classification_report.txt
+2026-07-05 17:35:42,577 | INFO | Saved tuning_confusion_matrix.png
+2026-07-05 17:35:42,709 | INFO | Saved tuning_roc_curve.png
+2026-07-05 17:35:42,724 | INFO | Saved best_model.pkl
+2026-07-05 17:35:42,724 | INFO | Saved best_model_metadata.json
+2026-07-05 17:35:42,732 | INFO | Updated model_comparison.csv
+2026-07-05 17:35:42,733 | INFO | Pipeline finished in 7.13 seconds.
+2026-07-05 17:35:42,733 | INFO | ============================================================
+2026-07-05 17:35:42,733 | INFO | MODEL TUNING FINISHED SUCCESSFULLY
+2026-07-05 17:35:42,733 | INFO | ============================================================
