@@ -14,7 +14,7 @@ Phase 3 : Implementation
     - MLflow                 [V]
 
 Phase 4 : Integration
-    - CI/CD
+    - CI/CD                  CI[V]
     - Docker
     - Serving
 
