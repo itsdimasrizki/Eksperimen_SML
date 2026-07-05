@@ -1,0 +1,35 @@
+groups:
+  - name: heart-disease-alerts
+    rules:
+
+      - alert: HighCPUUsage
+        expr: cpu_usage_percent > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage has exceeded 80% for more than 2 minutes."
+
+      - alert: HighMemoryUsage
+        expr: memory_usage_percent > 90
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage has exceeded 90% for more than 2 minutes."
+
+      - alert: HighPredictionErrorRate
+        expr: |
+          (
+            rate(prediction_errors_total[5m])
+            /
+            rate(prediction_requests_total[5m])
+          ) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High prediction error rate"
+          description: "Prediction error rate has exceeded 5% during the last 5 minutes."
