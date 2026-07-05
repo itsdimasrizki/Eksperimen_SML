@@ -2,7 +2,7 @@
 
 ## Kriteria 1
 - [V] Notebook eksperimen
-- [ ] automate.py
+- [V] automate.py
 - [ ] GitHub Actions preprocessing
 
 ## Kriteria 2
