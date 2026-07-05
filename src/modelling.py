@@ -24,33 +24,28 @@ import json
 import logging
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 import joblib
-import pandas as pd
-
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.base import ClassifierMixin
-
 import matplotlib.pyplot as plt
 import numpy as np
-
+import pandas as pd
+from sklearn.base import ClassifierMixin
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
+    ConfusionMatrixDisplay,
+    RocCurveDisplay,
     accuracy_score,
     classification_report,
     confusion_matrix,
-    ConfusionMatrixDisplay,
     f1_score,
     precision_score,
     recall_score,
     roc_auc_score,
-    RocCurveDisplay,
+    roc_curve,
 )
-
-from sklearn.metrics import roc_curve
-
-from datetime import datetime
 
 # ==========================================================
 # Configuration
@@ -78,21 +73,13 @@ MODEL_METADATA_PATH = MODEL_DIR / "model_metadata.json"
 
 METRICS_PATH = ARTIFACT_DIR / "metrics.json"
 
-CLASSIFICATION_REPORT_PATH = (
-    ARTIFACT_DIR / "classification_report.txt"
-)
+CLASSIFICATION_REPORT_PATH = ARTIFACT_DIR / "classification_report.txt"
 
-CONFUSION_MATRIX_PATH = (
-    ARTIFACT_DIR / "confusion_matrix.png"
-)
+CONFUSION_MATRIX_PATH = ARTIFACT_DIR / "confusion_matrix.png"
 
-ROC_CURVE_PATH = (
-    ARTIFACT_DIR / "roc_curve.png"
-)
+ROC_CURVE_PATH = ARTIFACT_DIR / "roc_curve.png"
 
-MODEL_COMPARISON_PATH = (
-    REPORT_DIR / "model_comparison.csv"
-)
+MODEL_COMPARISON_PATH = REPORT_DIR / "model_comparison.csv"
 
 RANDOM_STATE = 42
 
@@ -120,17 +107,13 @@ def setup_logging() -> logging.Logger:
 
     logger.setLevel(logging.INFO)
 
-    formatter = logging.Formatter(
-        "%(asctime)s | %(levelname)s | %(message)s"
-    )
+    formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
 
     file_handler = logging.FileHandler(LOG_FILE)
 
     file_handler.setFormatter(formatter)
 
-    stream_handler = logging.StreamHandler(
-        sys.stdout
-    )
+    stream_handler = logging.StreamHandler(sys.stdout)
 
     stream_handler.setFormatter(formatter)
 
@@ -228,9 +211,7 @@ def load_dataframe(
     dataframe = pd.read_csv(path)
 
     if dataframe.empty:
-        raise ValueError(
-            f"{path.name} is empty."
-        )
+        raise ValueError(f"{path.name} is empty.")
 
     logger.info(
         "Loaded %s (%s)",
@@ -263,9 +244,7 @@ def load_artifact(
     """
 
     if not artifact_path.exists():
-        raise FileNotFoundError(
-            artifact_path
-        )
+        raise FileNotFoundError(artifact_path)
 
     logger.info(
         "Loading artifact: %s",
@@ -323,37 +302,21 @@ def load_processed_datasets() -> tuple[
         y_test
     """
 
-    logger.info(
-        "Loading processed datasets..."
-    )
+    logger.info("Loading processed datasets...")
 
-    X_train = load_dataframe(
-        PROCESSED_DIR / "X_train.csv"
-    )
+    X_train = load_dataframe(PROCESSED_DIR / "X_train.csv")
 
-    X_val = load_dataframe(
-        PROCESSED_DIR / "X_val.csv"
-    )
+    X_val = load_dataframe(PROCESSED_DIR / "X_val.csv")
 
-    X_test = load_dataframe(
-        PROCESSED_DIR / "X_test.csv"
-    )
+    X_test = load_dataframe(PROCESSED_DIR / "X_test.csv")
 
-    y_train = load_dataframe(
-        PROCESSED_DIR / "y_train.csv"
-    ).iloc[:, 0]
+    y_train = load_dataframe(PROCESSED_DIR / "y_train.csv").iloc[:, 0]
 
-    y_val = load_dataframe(
-        PROCESSED_DIR / "y_val.csv"
-    ).iloc[:, 0]
+    y_val = load_dataframe(PROCESSED_DIR / "y_val.csv").iloc[:, 0]
 
-    y_test = load_dataframe(
-        PROCESSED_DIR / "y_test.csv"
-    ).iloc[:, 0]
+    y_test = load_dataframe(PROCESSED_DIR / "y_test.csv").iloc[:, 0]
 
-    logger.info(
-        "Processed datasets loaded successfully."
-    )
+    logger.info("Processed datasets loaded successfully.")
 
     return (
         X_train,
@@ -363,6 +326,7 @@ def load_processed_datasets() -> tuple[
         y_val,
         y_test,
     )
+
 
 def load_preprocessor() -> Any:
     """
@@ -393,19 +357,16 @@ def build_baseline_model() -> ClassifierMixin:
     ClassifierMixin
     """
 
-    logger.info(
-        "Building baseline model..."
-    )
+    logger.info("Building baseline model...")
 
     model = RandomForestClassifier(
         random_state=RANDOM_STATE,
     )
 
-    logger.info(
-        "Baseline model created."
-    )
+    logger.info("Baseline model created.")
 
     return model
+
 
 # ==========================================================
 # Training
@@ -437,9 +398,7 @@ def train_model(
         Trained model and training time (seconds).
     """
 
-    logger.info(
-        "Starting model training..."
-    )
+    logger.info("Starting model training...")
 
     start_time = time.perf_counter()
 
@@ -448,10 +407,7 @@ def train_model(
         y_train,
     )
 
-    elapsed = (
-        time.perf_counter()
-        - start_time
-    )
+    elapsed = time.perf_counter() - start_time
 
     logger.info(
         "Training completed in %.2f seconds.",
@@ -567,6 +523,7 @@ def calculate_metrics(
 
     return metrics
 
+
 # ==========================================================
 # Evaluation
 # ==========================================================
@@ -603,9 +560,7 @@ def evaluate_model(
         probabilities
     """
 
-    logger.info(
-        "Evaluating model..."
-    )
+    logger.info("Evaluating model...")
 
     predictions, probabilities = predict_model(
         model,
@@ -618,9 +573,7 @@ def evaluate_model(
         probabilities,
     )
 
-    logger.info(
-        "Model evaluation completed."
-    )
+    logger.info("Model evaluation completed.")
 
     return (
         metrics,
@@ -650,9 +603,7 @@ def save_classification_report(
         Predicted labels.
     """
 
-    logger.info(
-        "Generating classification report..."
-    )
+    logger.info("Generating classification report...")
 
     report = classification_report(
         y_true,
@@ -696,6 +647,7 @@ def save_metrics(
         METRICS_PATH.name,
     )
 
+
 # ==========================================================
 # Visualization
 # ==========================================================
@@ -724,18 +676,14 @@ def save_confusion_matrix(
         Predicted labels.
     """
 
-    logger.info(
-        "Generating confusion matrix..."
-    )
+    logger.info("Generating confusion matrix...")
 
     cm = confusion_matrix(
         y_true,
         y_pred,
     )
 
-    fig, ax = plt.subplots(
-        figsize=(6, 6)
-    )
+    fig, ax = plt.subplots(figsize=(6, 6))
 
     ConfusionMatrixDisplay(
         confusion_matrix=cm,
@@ -744,9 +692,7 @@ def save_confusion_matrix(
         colorbar=False,
     )
 
-    ax.set_title(
-        "Confusion Matrix"
-    )
+    ax.set_title("Confusion Matrix")
 
     fig.savefig(
         CONFUSION_MATRIX_PATH,
@@ -778,9 +724,7 @@ def save_roc_curve(
         Positive class probabilities.
     """
 
-    logger.info(
-        "Generating ROC curve..."
-    )
+    logger.info("Generating ROC curve...")
 
     fpr, tpr, _ = roc_curve(
         y_true,
@@ -792,9 +736,7 @@ def save_roc_curve(
         probabilities,
     )
 
-    fig, ax = plt.subplots(
-        figsize=(7, 6)
-    )
+    fig, ax = plt.subplots(figsize=(7, 6))
 
     display = RocCurveDisplay(
         fpr=fpr,
@@ -804,9 +746,7 @@ def save_roc_curve(
 
     display.plot(ax=ax)
 
-    ax.set_title(
-        f"ROC Curve ({BASELINE_MODEL_NAME})"
-    )
+    ax.set_title(f"ROC Curve ({BASELINE_MODEL_NAME})")
 
     fig.savefig(
         ROC_CURVE_PATH,
@@ -820,6 +760,7 @@ def save_roc_curve(
         "Saved %s",
         ROC_CURVE_PATH.name,
     )
+
 
 # ==========================================================
 # Model Persistence
@@ -861,46 +802,22 @@ def save_model_metadata(
     """
 
     metadata = {
-
         "model_name": BASELINE_MODEL_NAME,
-
         "version": "baseline",
-
         "random_state": RANDOM_STATE,
-
-        "training_timestamp": (
-            datetime.now()
-            .isoformat()
-        ),
-
-        "training_samples": int(
-            len(X_train)
-        ),
-
-        "validation_samples": int(
-            len(X_val)
-        ),
-
-        "test_samples": int(
-            len(X_test)
-        ),
-
-        "training_features": int(
-            X_train.shape[1]
-        ),
-
+        "training_timestamp": (datetime.now().isoformat()),
+        "training_samples": int(len(X_train)),
+        "validation_samples": int(len(X_val)),
+        "test_samples": int(len(X_test)),
+        "training_features": int(X_train.shape[1]),
         "training_time_seconds": round(
             training_time,
             4,
         ),
-
         **metrics,
         "train_shape": list(X_train.shape),
-
         "validation_shape": list(X_val.shape),
-
         "test_shape": list(X_test.shape),
-
         "feature_names": X_train.columns.tolist(),
     }
 
@@ -913,6 +830,7 @@ def save_model_metadata(
         "Saved %s",
         MODEL_METADATA_PATH.name,
     )
+
 
 # ==========================================================
 # Model Comparison
@@ -935,26 +853,13 @@ def save_model_comparison(
         [
             {
                 "model": BASELINE_MODEL_NAME,
-
-                "version":"baseline",
-
-                "accuracy":
-                    metrics["accuracy"],
-
-                "precision":
-                    metrics["precision"],
-
-                "recall":
-                    metrics["recall"],
-
-                "f1_score":
-                    metrics["f1_score"],
-
-                "roc_auc":
-                    metrics["roc_auc"],
-
-                "training_time":
-                    training_time,
+                "version": "baseline",
+                "accuracy": metrics["accuracy"],
+                "precision": metrics["precision"],
+                "recall": metrics["recall"],
+                "f1_score": metrics["f1_score"],
+                "roc_auc": metrics["roc_auc"],
+                "training_time": training_time,
             }
         ]
     )
@@ -968,6 +873,7 @@ def save_model_comparison(
         "Saved %s",
         MODEL_COMPARISON_PATH.name,
     )
+
 
 # ==========================================================
 # Training Pipeline
@@ -989,9 +895,7 @@ def run_pipeline() -> None:
 
     _ = load_preprocessor()
 
-    logger.info(
-        "Loaded preprocessing artifact successfully."
-    )
+    logger.info("Loaded preprocessing artifact successfully.")
 
     (
         X_train,
@@ -1025,12 +929,10 @@ def run_pipeline() -> None:
         y_train,
     )
 
-    metrics, predictions, probabilities = (
-        evaluate_model(
-            model,
-            X_val,
-            y_val,
-        )
+    metrics, predictions, probabilities = evaluate_model(
+        model,
+        X_val,
+        y_val,
     )
 
     save_metrics(metrics)
@@ -1067,10 +969,7 @@ def run_pipeline() -> None:
         training_time,
     )
 
-    elapsed = (
-        time.perf_counter()
-        - start
-    )
+    elapsed = time.perf_counter() - start
 
     logger.info(
         "Pipeline finished in %.2f seconds.",
@@ -1080,6 +979,7 @@ def run_pipeline() -> None:
     logger.info("=" * 60)
     logger.info("TRAINING FINISHED SUCCESSFULLY")
     logger.info("=" * 60)
+
 
 # ==========================================================
 # CLI
@@ -1097,15 +997,11 @@ def main() -> None:
 
     except KeyboardInterrupt:
 
-        logger.warning(
-            "Training interrupted by user."
-        )
+        logger.warning("Training interrupted by user.")
 
     except Exception:
 
-        logger.exception(
-            "Unexpected error occurred."
-        )
+        logger.exception("Unexpected error occurred.")
 
         raise
 

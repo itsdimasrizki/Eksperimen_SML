@@ -12,20 +12,17 @@ from __future__ import annotations
 import json
 import logging
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
 import joblib
-import numpy as np
 import pandas as pd
-
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-
-import time
 
 # ==========================================================
 # Configuration
@@ -111,9 +108,7 @@ def setup_logging() -> logging.Logger:
 
     logger.setLevel(logging.INFO)
 
-    formatter = logging.Formatter(
-        "%(asctime)s | %(levelname)s | %(message)s"
-    )
+    formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
 
     file_handler = logging.FileHandler(LOG_FILE)
     file_handler.setFormatter(formatter)
@@ -150,6 +145,7 @@ def initialize_directories() -> None:
     for directory in directories:
         directory.mkdir(parents=True, exist_ok=True)
 
+
 # ==========================================================
 # JSON Utilities
 # ==========================================================
@@ -175,6 +171,7 @@ def save_json_report(data: dict[str, Any], output_path: Path) -> None:
             indent=4,
             ensure_ascii=False,
         )
+
 
 # ==========================================================
 # CSV Utilities
@@ -203,6 +200,7 @@ def save_dataframe(df: pd.DataFrame, output_path: Path) -> None:
         output_path.name,
     )
 
+
 # ==========================================================
 # Artifact Utilities
 # ==========================================================
@@ -230,6 +228,7 @@ def load_artifact(
     """
 
     return joblib.load(artifact_path)
+
 
 # ==========================================================
 # Dataset Loader
@@ -270,6 +269,7 @@ def load_dataset(path: Path) -> pd.DataFrame:
 
     return df
 
+
 # ==========================================================
 # Validation
 # ==========================================================
@@ -284,18 +284,11 @@ def validate_schema(df: pd.DataFrame) -> dict[str, Any]:
 
     actual_columns = list(df.columns)
 
-    missing_columns = sorted(
-        set(EXPECTED_COLUMNS) - set(actual_columns)
-    )
+    missing_columns = sorted(set(EXPECTED_COLUMNS) - set(actual_columns))
 
-    unexpected_columns = sorted(
-        set(actual_columns) - set(EXPECTED_COLUMNS)
-    )
+    unexpected_columns = sorted(set(actual_columns) - set(EXPECTED_COLUMNS))
 
-    duplicated_columns = (
-        df.columns[df.columns.duplicated()]
-        .tolist()
-    )
+    duplicated_columns = df.columns[df.columns.duplicated()].tolist()
 
     report = {
         "rows": int(df.shape[0]),
@@ -303,10 +296,7 @@ def validate_schema(df: pd.DataFrame) -> dict[str, Any]:
         "missing_columns": missing_columns,
         "unexpected_columns": unexpected_columns,
         "duplicated_columns": duplicated_columns,
-        "is_valid": (
-            len(missing_columns) == 0
-            and len(duplicated_columns) == 0
-        ),
+        "is_valid": (len(missing_columns) == 0 and len(duplicated_columns) == 0),
     }
 
     save_json_report(
@@ -315,18 +305,15 @@ def validate_schema(df: pd.DataFrame) -> dict[str, Any]:
     )
 
     if missing_columns:
-        raise ValueError(
-            f"Missing columns: {missing_columns}"
-        )
-    
+        raise ValueError(f"Missing columns: {missing_columns}")
+
     if duplicated_columns:
-        raise ValueError(
-            f"Duplicated columns: {duplicated_columns}"
-    )
+        raise ValueError(f"Duplicated columns: {duplicated_columns}")
 
     logger.info("Schema validation completed.")
 
     return report
+
 
 # ==========================================================
 # Missing Value Analysis
@@ -342,19 +329,22 @@ def analyze_missing_values(
 
     logger.info("Analyzing missing values...")
 
-    missing = (
-        df.isnull()
-        .sum()
-        .sort_values(ascending=False)
-    )
+    missing = df.isnull().sum().sort_values(ascending=False)
 
     report = {
         "total_missing": int(missing.sum()),
-        "missing_per_column": {
-            column: int(value)
-            for column, value in missing.items()
-        },
+        "missing_per_column": {column: int(value) for column, value in missing.items()},
     }
+
+    save_json_report(
+        report,
+        REPORT_DIR / "missing_value_report.json",
+    )
+
+    logger.info("Missing value analysis completed.")
+
+    return report
+
 
 # ==========================================================
 # Duplicate Analysis
@@ -392,6 +382,7 @@ def analyze_duplicates(
 
     return cleaned_df, report
 
+
 # ==========================================================
 # Outlier Analysis
 # ==========================================================
@@ -420,12 +411,7 @@ def analyze_outliers(
         lower = q1 - 1.5 * iqr
         upper = q3 + 1.5 * iqr
 
-        total = int(
-            (
-                (df[column] < lower)
-                | (df[column] > upper)
-            ).sum()
-        )
+        total = int(((df[column] < lower) | (df[column] > upper)).sum())
 
         report[column] = {
             "lower_bound": float(lower),
@@ -439,6 +425,7 @@ def analyze_outliers(
     )
 
     return report
+
 
 # ==========================================================
 # Preprocessing Pipeline
@@ -474,9 +461,7 @@ def build_preprocessor() -> ColumnTransformer:
         steps=[
             (
                 "imputer",
-                SimpleImputer(
-                    strategy="most_frequent"
-                ),
+                SimpleImputer(strategy="most_frequent"),
             ),
             (
                 "encoder",
@@ -515,6 +500,7 @@ def build_preprocessor() -> ColumnTransformer:
     )
 
     return preprocessor
+
 
 # ==========================================================
 # Dataset Split
@@ -581,6 +567,7 @@ def split_dataset(
         y_test,
     )
 
+
 # ==========================================================
 # Preprocessor Execution
 # ==========================================================
@@ -601,25 +588,15 @@ def preprocess_dataset(
     data only and transform all datasets.
     """
 
-    logger.info(
-        "Fitting preprocessing pipeline..."
-    )
+    logger.info("Fitting preprocessing pipeline...")
 
-    X_train_processed = preprocessor.fit_transform(
-        X_train
-    )
+    X_train_processed = preprocessor.fit_transform(X_train)
 
-    X_val_processed = preprocessor.transform(
-        X_val
-    )
+    X_val_processed = preprocessor.transform(X_val)
 
-    X_test_processed = preprocessor.transform(
-        X_test
-    )
+    X_test_processed = preprocessor.transform(X_test)
 
-    feature_names = (
-        preprocessor.get_feature_names_out()
-    )
+    feature_names = preprocessor.get_feature_names_out()
 
     X_train_processed = pd.DataFrame(
         X_train_processed,
@@ -639,9 +616,7 @@ def preprocess_dataset(
         index=X_test.index,
     )
 
-    logger.info(
-        "Preprocessing completed."
-    )
+    logger.info("Preprocessing completed.")
 
     return (
         X_train_processed,
@@ -649,9 +624,11 @@ def preprocess_dataset(
         X_test_processed,
     )
 
+
 # ==========================================================
 # Save Processed Dataset
 # ==========================================================
+
 
 def save_series(
     series: pd.Series,
@@ -666,6 +643,7 @@ def save_series(
         index=False,
     )
 
+
 def save_processed_dataset(
     X_train: pd.DataFrame,
     X_val: pd.DataFrame,
@@ -678,9 +656,7 @@ def save_processed_dataset(
     Save processed datasets.
     """
 
-    logger.info(
-        "Saving processed dataset..."
-    )
+    logger.info("Saving processed dataset...")
 
     save_dataframe(
         X_train,
@@ -712,9 +688,8 @@ def save_processed_dataset(
         PROCESSED_DIR / "y_test.csv",
     )
 
-    logger.info(
-        "Processed datasets saved."
-    )
+    logger.info("Processed datasets saved.")
+
 
 # ==========================================================
 # Save Clean Dataset
@@ -733,9 +708,8 @@ def save_clean_dataset(
         INTERIM_DIR / "heart_cleaned.csv",
     )
 
-    logger.info(
-        "Clean dataset saved."
-    )
+    logger.info("Clean dataset saved.")
+
 
 # ==========================================================
 # Save Preprocessor
@@ -754,9 +728,8 @@ def save_preprocessor(
         ARTIFACT_DIR / "preprocessor.pkl",
     )
 
-    logger.info(
-        "Preprocessor artifact saved."
-    )
+    logger.info("Preprocessor artifact saved.")
+
 
 # ==========================================================
 # Preprocessing Report
@@ -791,13 +764,13 @@ def generate_preprocessing_report(
         REPORT_DIR / "preprocessing_report.json",
     )
 
-    logger.info(
-        "Preprocessing report generated."
-    )
+    logger.info("Preprocessing report generated.")
+
 
 # ==========================================================
 # Main Pipeline
 # ==========================================================
+
 
 def save_pipeline_metadata() -> None:
     """
@@ -817,6 +790,7 @@ def save_pipeline_metadata() -> None:
         metadata,
         ARTIFACT_DIR / "preprocessing_metadata.json",
     )
+
 
 def run_pipeline() -> None:
     """
@@ -953,9 +927,10 @@ def run_pipeline() -> None:
     elapsed = time.perf_counter() - start_time
 
     logger.info(
-    "Execution time : %.2f seconds",
-    elapsed,
-)
+        "Execution time : %.2f seconds",
+        elapsed,
+    )
+
 
 # ==========================================================
 # Exception Handler
@@ -973,17 +948,14 @@ def main() -> None:
 
     except KeyboardInterrupt:
 
-        logger.warning(
-            "Pipeline interrupted by user."
-        )
+        logger.warning("Pipeline interrupted by user.")
 
     except Exception:
 
-        logger.exception(
-            "Unexpected error occurred."
-        )
+        logger.exception("Unexpected error occurred.")
 
         raise
+
 
 # ==========================================================
 # CLI

@@ -1,0 +1,19 @@
+line-length = 79
+
+target-version = "py312"
+
+exclude = [
+    ".git",
+    "__pycache__",
+    ".pytest_cache",
+    ".venv",
+    "mlruns",
+    "notebook"
+]
+
+lint.select = [
+    "E",
+    "F",
+    "I",
+    "UP"
+]

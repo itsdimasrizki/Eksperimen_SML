@@ -19,19 +19,15 @@ import json
 import logging
 import sys
 import time
-
 from pathlib import Path
 from typing import Any
 
+import joblib
 import mlflow
 import mlflow.sklearn
-
-from mlflow.models.signature import infer_signature
-
-from mlflow.tracking import MlflowClient
-
-import joblib
 import pandas as pd
+from mlflow.models.signature import infer_signature
+from mlflow.tracking import MlflowClient
 
 # ==========================================================
 # Configuration
@@ -55,9 +51,7 @@ MLFLOW_DB = PROJECT_ROOT / "mlflow.db"
 
 TRACKING_URI = f"sqlite:///{MLFLOW_DB.resolve()}"
 
-TRACKING_URI = (
-    f"sqlite:///{MLFLOW_DB.resolve()}"
-)
+TRACKING_URI = f"sqlite:///{MLFLOW_DB.resolve()}"
 
 EXPERIMENT_NAME = "heart_disease_prediction"
 
@@ -71,21 +65,13 @@ BASELINE_MODEL_PATH = MODEL_DIR / "baseline_model.pkl"
 
 BEST_MODEL_PATH = MODEL_DIR / "best_model.pkl"
 
-BASELINE_METADATA_PATH = (
-    MODEL_DIR / "model_metadata.json"
-)
+BASELINE_METADATA_PATH = MODEL_DIR / "model_metadata.json"
 
-BEST_METADATA_PATH = (
-    MODEL_DIR / "best_model_metadata.json"
-)
+BEST_METADATA_PATH = MODEL_DIR / "best_model_metadata.json"
 
-BASELINE_METRICS_PATH = (
-    ARTIFACT_DIR / "metrics.json"
-)
+BASELINE_METRICS_PATH = ARTIFACT_DIR / "metrics.json"
 
-TUNED_METRICS_PATH = (
-    ARTIFACT_DIR / "tuning_metrics.json"
-)
+TUNED_METRICS_PATH = ARTIFACT_DIR / "tuning_metrics.json"
 
 RANDOM_STATE = 42
 
@@ -109,9 +95,7 @@ def setup_logging() -> logging.Logger:
         exist_ok=True,
     )
 
-    logger = logging.getLogger(
-        "mlflow_tracking"
-    )
+    logger = logging.getLogger("mlflow_tracking")
 
     if logger.handlers:
         return logger
@@ -120,9 +104,7 @@ def setup_logging() -> logging.Logger:
         logging.INFO,
     )
 
-    formatter = logging.Formatter(
-        "%(asctime)s | %(levelname)s | %(message)s"
-    )
+    formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
 
     file_handler = logging.FileHandler(
         LOG_FILE,
@@ -163,9 +145,7 @@ def initialize_directories() -> None:
     Create required project directories.
     """
 
-    directories = (
-        LOG_DIR,
-    )
+    directories = (LOG_DIR,)
 
     for directory in directories:
 
@@ -174,9 +154,8 @@ def initialize_directories() -> None:
             exist_ok=True,
         )
 
-    logger.info(
-        "Project directories initialized."
-    )
+    logger.info("Project directories initialized.")
+
 
 # ==========================================================
 # Generic Helper
@@ -196,9 +175,7 @@ def validate_file_exists(
     """
 
     if not path.exists():
-        raise FileNotFoundError(
-            f"File not found: {path}"
-        )
+        raise FileNotFoundError(f"File not found: {path}")
 
 
 def load_json(
@@ -287,9 +264,7 @@ def load_dataframe(
     dataframe = pd.read_csv(path)
 
     if dataframe.empty:
-        raise ValueError(
-            f"{path.name} is empty."
-        )
+        raise ValueError(f"{path.name} is empty.")
 
     logger.info(
         "Loaded DataFrame: %s %s",
@@ -344,10 +319,7 @@ def get_file_size(
 
     validate_file_exists(path)
 
-    size = (
-        path.stat().st_size
-        / (1024 * 1024)
-    )
+    size = path.stat().st_size / (1024 * 1024)
 
     return round(
         size,
@@ -373,6 +345,7 @@ def log_file_information(
         get_file_size(path),
     )
 
+
 # ==========================================================
 # MLflow Helper
 # ==========================================================
@@ -383,9 +356,7 @@ def initialize_mlflow() -> None:
     Initialize MLflow tracking configuration.
     """
 
-    logger.info(
-        "Initializing MLflow..."
-    )
+    logger.info("Initializing MLflow...")
 
     mlflow.set_tracking_uri(
         TRACKING_URI,
@@ -421,17 +392,11 @@ def set_common_tags(
     mlflow.set_tags(
         {
             "project": "Heart Disease Prediction",
-
             "author": "Dimas Rizki",
-
             "framework": "Scikit-Learn",
-
             "problem_type": "Binary Classification",
-
             "dataset": "Heart Disease Dataset",
-
             "model_version": model_version,
-
             "tracking": "MLflow",
         }
     )
@@ -577,6 +542,7 @@ def log_model(
         model_name,
     )
 
+
 # ==========================================================
 # Dataset & Model Loader
 # ==========================================================
@@ -604,37 +570,21 @@ def load_processed_dataset() -> tuple[
         y_test
     """
 
-    logger.info(
-        "Loading processed datasets..."
-    )
+    logger.info("Loading processed datasets...")
 
-    X_train = load_dataframe(
-        PROCESSED_DIR / "X_train.csv"
-    )
+    X_train = load_dataframe(PROCESSED_DIR / "X_train.csv")
 
-    X_val = load_dataframe(
-        PROCESSED_DIR / "X_val.csv"
-    )
+    X_val = load_dataframe(PROCESSED_DIR / "X_val.csv")
 
-    X_test = load_dataframe(
-        PROCESSED_DIR / "X_test.csv"
-    )
+    X_test = load_dataframe(PROCESSED_DIR / "X_test.csv")
 
-    y_train = load_dataframe(
-        PROCESSED_DIR / "y_train.csv"
-    ).iloc[:, 0]
+    y_train = load_dataframe(PROCESSED_DIR / "y_train.csv").iloc[:, 0]
 
-    y_val = load_dataframe(
-        PROCESSED_DIR / "y_val.csv"
-    ).iloc[:, 0]
+    y_val = load_dataframe(PROCESSED_DIR / "y_val.csv").iloc[:, 0]
 
-    y_test = load_dataframe(
-        PROCESSED_DIR / "y_test.csv"
-    ).iloc[:, 0]
+    y_test = load_dataframe(PROCESSED_DIR / "y_test.csv").iloc[:, 0]
 
-    logger.info(
-        "Processed datasets loaded successfully."
-    )
+    logger.info("Processed datasets loaded successfully.")
 
     return (
         X_train,
@@ -752,11 +702,7 @@ def extract_baseline_parameters(
         ),
     }
 
-    return {
-        key: value
-        for key, value in parameters.items()
-        if value is not None
-    }
+    return {key: value for key, value in parameters.items() if value is not None}
 
 
 def extract_tuned_parameters(
@@ -790,11 +736,8 @@ def extract_tuned_parameters(
         best_params,
     )
 
-    return {
-        key: value
-        for key, value in parameters.items()
-        if value is not None
-    }
+    return {key: value for key, value in parameters.items() if value is not None}
+
 
 def collect_tuned_artifacts() -> list[Path]:
     """
@@ -808,19 +751,13 @@ def collect_tuned_artifacts() -> list[Path]:
     artifacts = [
         TUNED_METRICS_PATH,
         BEST_METADATA_PATH,
-        ARTIFACT_DIR /
-        "tuning_classification_report.txt",
-        ARTIFACT_DIR /
-        "tuning_confusion_matrix.png",
-        ARTIFACT_DIR /
-        "tuning_roc_curve.png",
+        ARTIFACT_DIR / "tuning_classification_report.txt",
+        ARTIFACT_DIR / "tuning_confusion_matrix.png",
+        ARTIFACT_DIR / "tuning_roc_curve.png",
     ]
 
-    return [
-        artifact
-        for artifact in artifacts
-        if artifact.exists()
-    ]
+    return [artifact for artifact in artifacts if artifact.exists()]
+
 
 # ==========================================================
 # Metadata Helper
@@ -863,9 +800,8 @@ def log_metadata_as_tags(
             value,
         )
 
-    logger.info(
-        "Metadata tags logged."
-    )
+    logger.info("Metadata tags logged.")
+
 
 # ==========================================================
 # Artifact Helper
@@ -889,20 +825,15 @@ def collect_baseline_artifacts() -> list[Path]:
         ARTIFACT_DIR / "roc_curve.png",
     ]
 
-    return [
-        artifact
-        for artifact in artifacts
-        if artifact.exists()
-    ]
+    return [artifact for artifact in artifacts if artifact.exists()]
+
 
 def log_baseline_artifacts() -> None:
     """
     Log all baseline artifacts.
     """
 
-    logger.info(
-        "Logging baseline artifacts..."
-    )
+    logger.info("Logging baseline artifacts...")
 
     artifacts = collect_baseline_artifacts()
 
@@ -911,9 +842,7 @@ def log_baseline_artifacts() -> None:
         artifact_path="baseline",
     )
 
-    logger.info(
-        "Baseline artifacts logged."
-    )
+    logger.info("Baseline artifacts logged.")
 
 
 def log_tuned_artifacts() -> None:
@@ -921,9 +850,7 @@ def log_tuned_artifacts() -> None:
     Log all tuned artifacts.
     """
 
-    logger.info(
-        "Logging tuned artifacts..."
-    )
+    logger.info("Logging tuned artifacts...")
 
     artifacts = collect_tuned_artifacts()
 
@@ -932,9 +859,8 @@ def log_tuned_artifacts() -> None:
         artifact_path="tuned",
     )
 
-    logger.info(
-        "Tuned artifacts logged."
-    )
+    logger.info("Tuned artifacts logged.")
+
 
 def log_model_summary(
     model_path: Path,
@@ -961,6 +887,7 @@ def log_model_summary(
         "Model size : %.2f MB",
         get_file_size(model_path),
     )
+
 
 # ==========================================================
 # Baseline Tracking
@@ -1020,9 +947,8 @@ def log_baseline_run(
             model_name="baseline_model",
         )
 
-    logger.info(
-        "Baseline tracking completed."
-    )
+    logger.info("Baseline tracking completed.")
+
 
 # ==========================================================
 # Tuned Tracking
@@ -1087,15 +1013,9 @@ def log_tuned_run(
             model_name="best_model",
         )
 
-        run_id = (
-            mlflow.active_run()
-            .info
-            .run_id
-        )
+        run_id = mlflow.active_run().info.run_id
 
-    logger.info(
-        "Tuned tracking completed."
-    )
+    logger.info("Tuned tracking completed.")
 
     register_best_model(
         run_id,
@@ -1119,28 +1039,20 @@ def register_best_model(
         MLflow run identifier.
     """
 
-    logger.info(
-        "Registering best model..."
-    )
+    logger.info("Registering best model...")
 
-    model_uri = (
-        f"runs:/{run_id}/best_model"
-    )
+    model_uri = f"runs:/{run_id}/best_model"
 
     try:
 
-        registered_model = (
-            mlflow.register_model(
-                model_uri=model_uri,
-                name=REGISTERED_MODEL_NAME,
-            )
+        registered_model = mlflow.register_model(
+            model_uri=model_uri,
+            name=REGISTERED_MODEL_NAME,
         )
 
         client = MlflowClient()
 
-        latest_version = (
-            registered_model.version
-        )
+        latest_version = registered_model.version
 
         client.set_registered_model_alias(
             REGISTERED_MODEL_NAME,
@@ -1159,6 +1071,7 @@ def register_best_model(
             "Model registration skipped: %s",
             error,
         )
+
 
 # ==========================================================
 # Pipeline
@@ -1204,17 +1117,13 @@ def run_pipeline() -> None:
         X_test.shape,
     )
 
-    logger.info(
-        "Tracking baseline experiment..."
-    )
+    logger.info("Tracking baseline experiment...")
 
     log_baseline_run(
         X_sample=X_train,
     )
 
-    logger.info(
-        "Tracking tuned experiment..."
-    )
+    logger.info("Tracking tuned experiment...")
 
     log_tuned_run(
         X_sample=X_train,
@@ -1224,10 +1133,7 @@ def run_pipeline() -> None:
     logger.info("MLFLOW TRACKING FINISHED")
     logger.info("=" * 60)
 
-    elapsed = (
-        time.perf_counter()
-        - start
-    )
+    elapsed = time.perf_counter() - start
 
     logger.info(
         "Pipeline finished in %.2f seconds.",
@@ -1251,15 +1157,11 @@ def main() -> None:
 
     except KeyboardInterrupt:
 
-        logger.warning(
-            "MLflow tracking interrupted by user."
-        )
+        logger.warning("MLflow tracking interrupted by user.")
 
     except Exception:
 
-        logger.exception(
-            "Unexpected error occurred."
-        )
+        logger.exception("Unexpected error occurred.")
 
         raise
 

@@ -25,7 +25,6 @@ import json
 import logging
 import sys
 import time
-
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -34,7 +33,6 @@ import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
 from sklearn.base import ClassifierMixin
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
@@ -76,32 +74,17 @@ BASELINE_MODEL_PATH = MODEL_DIR / "baseline_model.pkl"
 
 BEST_MODEL_PATH = MODEL_DIR / "best_model.pkl"
 
-BEST_METADATA_PATH = (
-    MODEL_DIR / "best_model_metadata.json"
-)
+BEST_METADATA_PATH = MODEL_DIR / "best_model_metadata.json"
 
-MODEL_COMPARISON_PATH = (
-    REPORT_DIR / "model_comparison.csv"
-)
+MODEL_COMPARISON_PATH = REPORT_DIR / "model_comparison.csv"
 
-METRICS_PATH = (
-    ARTIFACT_DIR / "tuning_metrics.json"
-)
+METRICS_PATH = ARTIFACT_DIR / "tuning_metrics.json"
 
-CLASSIFICATION_REPORT_PATH = (
-    ARTIFACT_DIR /
-    "tuning_classification_report.txt"
-)
+CLASSIFICATION_REPORT_PATH = ARTIFACT_DIR / "tuning_classification_report.txt"
 
-CONFUSION_MATRIX_PATH = (
-    ARTIFACT_DIR /
-    "tuning_confusion_matrix.png"
-)
+CONFUSION_MATRIX_PATH = ARTIFACT_DIR / "tuning_confusion_matrix.png"
 
-ROC_CURVE_PATH = (
-    ARTIFACT_DIR /
-    "tuning_roc_curve.png"
-)
+ROC_CURVE_PATH = ARTIFACT_DIR / "tuning_roc_curve.png"
 
 RANDOM_STATE = 42
 
@@ -130,15 +113,11 @@ def setup_logging() -> logging.Logger:
 
     logger.setLevel(logging.INFO)
 
-    formatter = logging.Formatter(
-        "%(asctime)s | %(levelname)s | %(message)s"
-    )
+    formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
 
     file_handler = logging.FileHandler(LOG_FILE)
 
-    stream_handler = logging.StreamHandler(
-        sys.stdout
-    )
+    stream_handler = logging.StreamHandler(sys.stdout)
 
     file_handler.setFormatter(formatter)
 
@@ -170,6 +149,7 @@ def initialize_directories() -> None:
             parents=True,
             exist_ok=True,
         )
+
 
 # ==========================================================
 # Generic Helper
@@ -245,6 +225,7 @@ def save_artifact(
         output_path.name,
     )
 
+
 # ==========================================================
 # Dataset
 # ==========================================================
@@ -252,29 +233,17 @@ def save_artifact(
 
 def load_processed_datasets():
 
-    X_train = load_dataframe(
-        PROCESSED_DIR / "X_train.csv"
-    )
+    X_train = load_dataframe(PROCESSED_DIR / "X_train.csv")
 
-    X_val = load_dataframe(
-        PROCESSED_DIR / "X_val.csv"
-    )
+    X_val = load_dataframe(PROCESSED_DIR / "X_val.csv")
 
-    X_test = load_dataframe(
-        PROCESSED_DIR / "X_test.csv"
-    )
+    X_test = load_dataframe(PROCESSED_DIR / "X_test.csv")
 
-    y_train = load_dataframe(
-        PROCESSED_DIR / "y_train.csv"
-    ).iloc[:, 0]
+    y_train = load_dataframe(PROCESSED_DIR / "y_train.csv").iloc[:, 0]
 
-    y_val = load_dataframe(
-        PROCESSED_DIR / "y_val.csv"
-    ).iloc[:, 0]
+    y_val = load_dataframe(PROCESSED_DIR / "y_val.csv").iloc[:, 0]
 
-    y_test = load_dataframe(
-        PROCESSED_DIR / "y_test.csv"
-    ).iloc[:, 0]
+    y_test = load_dataframe(PROCESSED_DIR / "y_test.csv").iloc[:, 0]
 
     return (
         X_train,
@@ -284,6 +253,7 @@ def load_processed_datasets():
         y_val,
         y_test,
     )
+
 
 # ==========================================================
 # Model
@@ -307,38 +277,32 @@ def build_candidate_model() -> RandomForestClassifier:
 def get_search_space() -> dict[str, list[Any]]:
 
     return {
-
         "n_estimators": [
             100,
             200,
             300,
             500,
         ],
-
         "max_depth": [
             None,
             5,
             10,
             20,
         ],
-
         "min_samples_split": [
             2,
             5,
             10,
         ],
-
         "min_samples_leaf": [
             1,
             2,
             4,
         ],
-
         "max_features": [
             "sqrt",
             "log2",
         ],
-
         "bootstrap": [
             True,
             False,
@@ -354,9 +318,7 @@ def tune_model(
     float,
 ]:
 
-    logger.info(
-        "Starting hyperparameter tuning..."
-    )
+    logger.info("Starting hyperparameter tuning...")
 
     cv = StratifiedKFold(
         n_splits=CV_SPLITS,
@@ -365,23 +327,14 @@ def tune_model(
     )
 
     search = RandomizedSearchCV(
-
         estimator=build_candidate_model(),
-
         param_distributions=get_search_space(),
-
         n_iter=N_ITER,
-
         scoring="f1",
-
         cv=cv,
-
         n_jobs=-1,
-
         random_state=RANDOM_STATE,
-
         verbose=1,
-
         refit=True,
     )
 
@@ -392,10 +345,7 @@ def tune_model(
         y_train,
     )
 
-    elapsed = (
-        time.perf_counter()
-        - start
-    )
+    elapsed = time.perf_counter() - start
 
     logger.info(
         "Best CV Score : %.4f",
@@ -411,6 +361,7 @@ def tune_model(
         search,
         elapsed,
     )
+
 
 # ==========================================================
 # Prediction
@@ -444,14 +395,12 @@ def calculate_metrics(
 ) -> dict[str, float]:
 
     return {
-
         "accuracy": float(
             accuracy_score(
                 y_true,
                 y_pred,
             )
         ),
-
         "precision": float(
             precision_score(
                 y_true,
@@ -459,7 +408,6 @@ def calculate_metrics(
                 zero_division=0,
             )
         ),
-
         "recall": float(
             recall_score(
                 y_true,
@@ -467,7 +415,6 @@ def calculate_metrics(
                 zero_division=0,
             )
         ),
-
         "f1_score": float(
             f1_score(
                 y_true,
@@ -475,7 +422,6 @@ def calculate_metrics(
                 zero_division=0,
             )
         ),
-
         "roc_auc": float(
             roc_auc_score(
                 y_true,
@@ -570,9 +516,7 @@ def save_confusion_matrix(
         colorbar=False,
     )
 
-    ax.set_title(
-        "Tuned Model Confusion Matrix"
-    )
+    ax.set_title("Tuned Model Confusion Matrix")
 
     fig.savefig(
         CONFUSION_MATRIX_PATH,
@@ -615,9 +559,7 @@ def save_roc_curve(
         ax=ax,
     )
 
-    ax.set_title(
-        "ROC Curve (Tuned Model)"
-    )
+    ax.set_title("ROC Curve (Tuned Model)")
 
     fig.savefig(
         ROC_CURVE_PATH,
@@ -648,44 +590,28 @@ def save_metadata(
 ) -> None:
 
     metadata = {
-
         "model_name": MODEL_NAME,
-
         "version": "tuned",
-
         "random_state": RANDOM_STATE,
-
-        "training_timestamp": (
-            datetime.now().isoformat()
-        ),
-
+        "training_timestamp": (datetime.now().isoformat()),
         "training_time_seconds": round(
             training_time,
             4,
         ),
-
         "cv_best_score": float(
             search.best_score_,
         ),
-
         "best_parameters": search.best_params_,
-
         "train_shape": list(
             X_train.shape,
         ),
-
         "validation_shape": list(
             X_val.shape,
         ),
-
         "test_shape": list(
             X_test.shape,
         ),
-
-        "feature_names": (
-            X_train.columns.tolist()
-        ),
-
+        "feature_names": (X_train.columns.tolist()),
         **metrics,
     }
 
@@ -764,6 +690,7 @@ def save_best_model(
         BEST_MODEL_PATH,
     )
 
+
 # ==========================================================
 # Pipeline
 # ==========================================================
@@ -831,12 +758,10 @@ def run_pipeline() -> None:
 
     tuned_model = search.best_estimator_
 
-    tuned_metrics, prediction, probability = (
-        evaluate_model(
-            tuned_model,
-            X_val,
-            y_val,
-        )
+    tuned_metrics, prediction, probability = evaluate_model(
+        tuned_model,
+        X_val,
+        y_val,
     )
 
     logger.info(
@@ -848,22 +773,15 @@ def run_pipeline() -> None:
     # Model Selection
     # ------------------------------------------------------
 
-    if (
-        tuned_metrics["f1_score"]
-        >= baseline_metrics["f1_score"]
-    ):
+    if tuned_metrics["f1_score"] >= baseline_metrics["f1_score"]:
 
-        logger.info(
-            "Selected tuned model."
-        )
+        logger.info("Selected tuned model.")
 
         best_model = tuned_model
 
     else:
 
-        logger.warning(
-            "Baseline model performs better."
-        )
+        logger.warning("Baseline model performs better.")
 
         best_model = baseline_model
 
@@ -871,16 +789,12 @@ def run_pipeline() -> None:
     # Final Test Evaluation (Only Once)
     # ------------------------------------------------------
 
-    logger.info(
-        "Evaluating best model on test dataset..."
-    )
+    logger.info("Evaluating best model on test dataset...")
 
-    test_metrics, test_prediction, test_probability = (
-        evaluate_model(
-            best_model,
-            X_test,
-            y_test,
-        )
+    test_metrics, test_prediction, test_probability = evaluate_model(
+        best_model,
+        X_test,
+        y_test,
     )
 
     for key, value in test_metrics.items():
@@ -932,10 +846,7 @@ def run_pipeline() -> None:
         tuning_time,
     )
 
-    elapsed = (
-        time.perf_counter()
-        - start
-    )
+    elapsed = time.perf_counter() - start
 
     logger.info(
         "Pipeline finished in %.2f seconds.",
@@ -960,15 +871,11 @@ def main() -> None:
 
     except KeyboardInterrupt:
 
-        logger.warning(
-            "Model tuning interrupted by user."
-        )
+        logger.warning("Model tuning interrupted by user.")
 
     except Exception:
 
-        logger.exception(
-            "Unexpected error occurred."
-        )
+        logger.exception("Unexpected error occurred.")
 
         raise
 
