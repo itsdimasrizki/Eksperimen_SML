@@ -1,0 +1,51 @@
+2026-07-05 16:34:56,693 | INFO | ============================================================
+2026-07-05 16:34:56,693 | INFO | STARTING PREPROCESSING PIPELINE
+2026-07-05 16:34:56,693 | INFO | ============================================================
+2026-07-05 16:34:56,693 | INFO | Loading dataset...
+2026-07-05 16:34:56,697 | INFO | Dataset path : /home/lazy4u/Projects/Eksperimen_SML/data/raw/heart.csv
+2026-07-05 16:34:56,697 | INFO | Dataset loaded successfully.
+2026-07-05 16:34:56,697 | INFO | Shape : (1025, 14)
+2026-07-05 16:34:56,697 | INFO | Validating dataset schema...
+2026-07-05 16:34:56,698 | INFO | Schema validation completed.
+2026-07-05 16:34:56,698 | INFO | Analyzing missing values...
+2026-07-05 16:34:56,699 | INFO | Checking duplicate rows...
+2026-07-05 16:34:56,704 | INFO | Removed 723 duplicate rows.
+2026-07-05 16:34:56,706 | INFO | Saved heart_cleaned.csv
+2026-07-05 16:34:56,706 | INFO | Clean dataset saved.
+2026-07-05 16:34:56,706 | INFO | Analyzing outliers...
+2026-07-05 16:34:56,711 | INFO | Splitting dataset...
+2026-07-05 16:34:56,728 | INFO | Train : (211, 13)
+2026-07-05 16:34:56,729 | INFO | Validation : (45, 13)
+2026-07-05 16:34:56,729 | INFO | Test : (46, 13)
+2026-07-05 16:34:56,730 | INFO | Train target distribution:
+target
+1    0.545024
+0    0.454976
+Name: proportion, dtype: float64
+2026-07-05 16:34:56,731 | INFO | Validation target distribution:
+target
+1    0.533333
+0    0.466667
+Name: proportion, dtype: float64
+2026-07-05 16:34:56,732 | INFO | Test target distribution:
+target
+1    0.543478
+0    0.456522
+Name: proportion, dtype: float64
+2026-07-05 16:34:56,733 | INFO | Building preprocessing pipeline...
+2026-07-05 16:34:56,733 | INFO | Preprocessor created successfully.
+2026-07-05 16:34:56,733 | INFO | Numerical features : ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
+2026-07-05 16:34:56,733 | INFO | Categorical features : ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal']
+2026-07-05 16:34:56,733 | INFO | Fitting preprocessing pipeline...
+2026-07-05 16:34:56,764 | INFO | Preprocessing completed.
+2026-07-05 16:34:56,765 | INFO | Saving processed dataset...
+2026-07-05 16:34:56,768 | INFO | Saved X_train.csv
+2026-07-05 16:34:56,769 | INFO | Saved X_val.csv
+2026-07-05 16:34:56,770 | INFO | Saved X_test.csv
+2026-07-05 16:34:56,771 | INFO | Processed datasets saved.
+2026-07-05 16:34:56,773 | INFO | Preprocessor artifact saved.
+2026-07-05 16:34:56,774 | INFO | Preprocessing report generated.
+2026-07-05 16:34:56,774 | INFO | ============================================================
+2026-07-05 16:34:56,774 | INFO | PREPROCESSING FINISHED SUCCESSFULLY
+2026-07-05 16:34:56,774 | INFO | ============================================================
+2026-07-05 16:34:56,774 | INFO | Execution time : 0.08 seconds

@@ -1,3 +1,5 @@
 {
-    "duplicate_rows": 723
+    "duplicate_rows": 723,
+    "rows_before": 1025,
+    "rows_after": 302
 }

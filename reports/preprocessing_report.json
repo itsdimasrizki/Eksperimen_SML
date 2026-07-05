@@ -1,19 +1,49 @@
 {
-    "original_rows": 1025,
-    "processed_rows": 302,
-    "duplicates_removed": 723,
-    "missing_values": 0,
-    "train_shape": [
-        211,
-        30
-    ],
-    "validation_shape": [
-        45,
-        30
-    ],
-    "test_shape": [
-        46,
-        30
-    ],
-    "random_state": 42
+    "schema_validation": {
+        "rows": 1025,
+        "columns": 14,
+        "missing_columns": [],
+        "unexpected_columns": [],
+        "duplicated_columns": [],
+        "is_valid": true
+    },
+    "missing_values": null,
+    "duplicates": {
+        "duplicate_rows": 723,
+        "rows_before": 1025,
+        "rows_after": 302
+    },
+    "outliers": {
+        "age": {
+            "lower_bound": 28.5,
+            "upper_bound": 80.5,
+            "outliers": 0
+        },
+        "trestbps": {
+            "lower_bound": 90.0,
+            "upper_bound": 170.0,
+            "outliers": 9
+        },
+        "chol": {
+            "lower_bound": 115.375,
+            "upper_bound": 370.375,
+            "outliers": 5
+        },
+        "thalach": {
+            "lower_bound": 84.125,
+            "upper_bound": 215.125,
+            "outliers": 1
+        },
+        "oldpeak": {
+            "lower_bound": -2.4000000000000004,
+            "upper_bound": 4.0,
+            "outliers": 5
+        }
+    },
+    "random_state": 42,
+    "split": {
+        "train": 0.7,
+        "validation": 0.15,
+        "test": 0.15
+    }
 }

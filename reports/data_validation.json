@@ -1,9 +1,8 @@
 {
-    "dataset_shape": [
-        1025,
-        14
-    ],
+    "rows": 1025,
+    "columns": 14,
     "missing_columns": [],
-    "additional_columns": [],
-    "duplicate_columns": 0
+    "unexpected_columns": [],
+    "duplicated_columns": [],
+    "is_valid": true
 }
