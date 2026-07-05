@@ -10,12 +10,34 @@ from __future__ import annotations
 
 import logging
 import sys
+import time
+
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import (
+    FastAPI,
+    HTTPException,
+    Request,
+)
 from fastapi.responses import JSONResponse
 
 from inference import InferenceService
+
+from prometheus_exporter import (
+    metrics_endpoint,
+)
+
+from monitoring.monitoring_helper import (
+    record_request,
+    register_model,
+    record_prediction,
+    record_error,
+    record_latency,
+)
+
+from monitoring.collectors import (
+    collect_system_metrics,
+)
 
 # ==========================================================
 # Logging
@@ -74,6 +96,8 @@ async def lifespan(app: FastAPI):
 
     service = InferenceService()
 
+    register_model(service.metadata)
+
     logger.info("Inference service initialized.")
 
     yield
@@ -94,6 +118,18 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+@app.middleware("http")
+async def monitoring_middleware(
+    request: Request,
+    call_next,
+):
+    record_request()
+
+    collect_system_metrics()
+
+    response = await call_next(request)
+
+    return response
 
 
 # ==========================================================
@@ -124,6 +160,15 @@ def health():
     }
 
 
+@app.get("/metrics")
+def metrics():
+    """
+    Prometheus metrics endpoint.
+    """
+
+    return metrics_endpoint()
+
+
 # ==========================================================
 # Prediction Endpoint
 # ==========================================================
@@ -141,9 +186,20 @@ def predict(payload: dict):
             detail="Inference service not initialized.",
         )
 
+    start_time = time.perf_counter()
+
     try:
 
         result = service.predict(payload)
+
+        record_prediction()
+
+        elapsed = (
+            time.perf_counter()
+            - start_time
+        )
+
+        record_latency(elapsed)
 
         return JSONResponse(
             status_code=200,
@@ -151,6 +207,15 @@ def predict(payload: dict):
         )
 
     except ValueError as error:
+
+        record_error()
+
+        elapsed = (
+            time.perf_counter()
+            - start_time
+        )
+
+        record_latency(elapsed)
 
         logger.warning(str(error))
 
@@ -160,6 +225,15 @@ def predict(payload: dict):
         )
 
     except Exception:
+
+        record_error()
+
+        elapsed = (
+            time.perf_counter()
+            - start_time
+        )
+
+        record_latency(elapsed)
 
         logger.exception("Prediction failed.")
 

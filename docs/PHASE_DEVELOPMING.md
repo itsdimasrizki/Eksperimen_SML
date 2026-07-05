@@ -19,7 +19,7 @@ Phase 4 : Integration
     - Serving
 
 Phase 5 : Testing & Monitoring
-    - Prometheus
+    - Prometheus            [V]
     - Grafana
     - Alerting
 
