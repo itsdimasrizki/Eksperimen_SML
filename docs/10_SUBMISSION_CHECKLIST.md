@@ -6,7 +6,7 @@
 - [ ] GitHub Actions preprocessing
 
 ## Kriteria 2
-- [ ] modelling.py
+- [V] modelling.py
 - [ ] modelling_tuning.py
 - [ ] MLflow screenshot
 - [ ] Artifact screenshot

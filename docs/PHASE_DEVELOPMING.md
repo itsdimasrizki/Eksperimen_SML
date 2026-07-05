@@ -9,7 +9,7 @@ Phase 2 : Design
 Phase 3 : Implementation
     - eksperiment.ipynb      [V]
     - modelling.py           [V]
-    - automate.py
+    - automate.py            [V]
     - MLflow
 
 Phase 4 : Integration
