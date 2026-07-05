@@ -1,0 +1,102 @@
+2026-07-05 17:21:32,353 | INFO | ============================================================
+2026-07-05 17:21:32,354 | INFO | STARTING MODEL TRAINING
+2026-07-05 17:21:32,354 | INFO | ============================================================
+2026-07-05 17:21:32,354 | INFO | Loading artifact: preprocessor.pkl
+2026-07-05 17:21:32,356 | INFO | Loaded preprocessing artifact successfully.
+2026-07-05 17:21:32,356 | INFO | Loading processed datasets...
+2026-07-05 17:21:32,357 | INFO | Loaded X_train.csv ((211, 30))
+2026-07-05 17:21:32,358 | INFO | Loaded X_val.csv ((45, 30))
+2026-07-05 17:21:32,359 | INFO | Loaded X_test.csv ((46, 30))
+2026-07-05 17:21:32,359 | INFO | Loaded y_train.csv ((211, 1))
+2026-07-05 17:21:32,360 | INFO | Loaded y_val.csv ((45, 1))
+2026-07-05 17:21:32,360 | INFO | Loaded y_test.csv ((46, 1))
+2026-07-05 17:21:32,360 | INFO | Processed datasets loaded successfully.
+2026-07-05 17:21:32,360 | INFO | Train shape : (211, 30)
+2026-07-05 17:21:32,360 | INFO | Validation shape : (45, 30)
+2026-07-05 17:21:32,360 | INFO | Test shape : (46, 30)
+2026-07-05 17:21:32,360 | INFO | Building baseline model...
+2026-07-05 17:21:32,360 | INFO | Baseline model created.
+2026-07-05 17:21:32,360 | INFO | Starting model training...
+2026-07-05 17:21:32,453 | INFO | Training completed in 0.09 seconds.
+2026-07-05 17:21:32,453 | INFO | Evaluating model...
+2026-07-05 17:21:32,471 | INFO | Evaluation Metrics
+2026-07-05 17:21:32,471 | INFO | accuracy : 0.8444
+2026-07-05 17:21:32,471 | INFO | precision : 0.7931
+2026-07-05 17:21:32,471 | INFO | recall : 0.9583
+2026-07-05 17:21:32,471 | INFO | f1_score : 0.8679
+2026-07-05 17:21:32,471 | INFO | roc_auc : 0.9415
+2026-07-05 17:21:32,471 | INFO | Model evaluation completed.
+2026-07-05 17:21:32,471 | INFO | Saved metrics.json
+2026-07-05 17:21:32,471 | INFO | Generating classification report...
+2026-07-05 17:21:32,476 | INFO | Saved classification_report.txt
+2026-07-05 17:21:32,476 | INFO | Generating confusion matrix...
+2026-07-05 17:21:32,688 | INFO | Saved confusion_matrix.png
+2026-07-05 17:21:32,688 | INFO | Generating ROC curve...
+2026-07-05 17:21:32,694 | ERROR | Unexpected error occurred.
+Traceback (most recent call last):
+  File "/home/lazy4u/Projects/Eksperimen_SML/src/modelling.py", line 1097, in main
+    run_pipeline()
+    ~~~~~~~~~~~~^^
+  File "/home/lazy4u/Projects/Eksperimen_SML/src/modelling.py", line 1049, in run_pipeline
+    save_roc_curve(
+    ~~~~~~~~~~~~~~^
+        y_val,
+        ^^^^^^
+        probabilities,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lazy4u/Projects/Eksperimen_SML/src/modelling.py", line 799, in save_roc_curve
+    RocCurveDisplay(
+    ~~~~~~~~~~~~~~~^
+        fpr=fpr,
+        ^^^^^^^^
+    ...<2 lines>...
+        estimator_name=BASELINE_MODEL_NAME,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).plot(
+    ^
+TypeError: RocCurveDisplay.__init__() got an unexpected keyword argument 'estimator_name'
+2026-07-05 17:25:45,597 | INFO | ============================================================
+2026-07-05 17:25:45,597 | INFO | STARTING MODEL TRAINING
+2026-07-05 17:25:45,597 | INFO | ============================================================
+2026-07-05 17:25:45,598 | INFO | Loading artifact: preprocessor.pkl
+2026-07-05 17:25:45,599 | INFO | Loaded preprocessing artifact successfully.
+2026-07-05 17:25:45,599 | INFO | Loading processed datasets...
+2026-07-05 17:25:45,601 | INFO | Loaded X_train.csv ((211, 30))
+2026-07-05 17:25:45,602 | INFO | Loaded X_val.csv ((45, 30))
+2026-07-05 17:25:45,603 | INFO | Loaded X_test.csv ((46, 30))
+2026-07-05 17:25:45,604 | INFO | Loaded y_train.csv ((211, 1))
+2026-07-05 17:25:45,605 | INFO | Loaded y_val.csv ((45, 1))
+2026-07-05 17:25:45,605 | INFO | Loaded y_test.csv ((46, 1))
+2026-07-05 17:25:45,606 | INFO | Processed datasets loaded successfully.
+2026-07-05 17:25:45,606 | INFO | Train shape : (211, 30)
+2026-07-05 17:25:45,606 | INFO | Validation shape : (45, 30)
+2026-07-05 17:25:45,606 | INFO | Test shape : (46, 30)
+2026-07-05 17:25:45,606 | INFO | Building baseline model...
+2026-07-05 17:25:45,606 | INFO | Baseline model created.
+2026-07-05 17:25:45,606 | INFO | Starting model training...
+2026-07-05 17:25:45,710 | INFO | Training completed in 0.10 seconds.
+2026-07-05 17:25:45,710 | INFO | Evaluating model...
+2026-07-05 17:25:45,726 | INFO | Evaluation Metrics
+2026-07-05 17:25:45,727 | INFO | accuracy : 0.8444
+2026-07-05 17:25:45,727 | INFO | precision : 0.7931
+2026-07-05 17:25:45,727 | INFO | recall : 0.9583
+2026-07-05 17:25:45,727 | INFO | f1_score : 0.8679
+2026-07-05 17:25:45,727 | INFO | roc_auc : 0.9415
+2026-07-05 17:25:45,727 | INFO | Model evaluation completed.
+2026-07-05 17:25:45,727 | INFO | Saved metrics.json
+2026-07-05 17:25:45,727 | INFO | Generating classification report...
+2026-07-05 17:25:45,731 | INFO | Saved classification_report.txt
+2026-07-05 17:25:45,731 | INFO | Generating confusion matrix...
+2026-07-05 17:25:45,938 | INFO | Saved confusion_matrix.png
+2026-07-05 17:25:45,938 | INFO | Generating ROC curve...
+2026-07-05 17:25:46,072 | INFO | Saved roc_curve.png
+2026-07-05 17:25:46,086 | INFO | Saved artifact: baseline_model.pkl
+2026-07-05 17:25:46,086 | INFO | Saved baseline_model.pkl
+2026-07-05 17:25:46,086 | INFO | Saved model_metadata.json
+2026-07-05 17:25:46,091 | INFO | Saved model_comparison.csv
+2026-07-05 17:25:46,091 | INFO | Pipeline finished in 0.49 seconds.
+2026-07-05 17:25:46,091 | INFO | ============================================================
+2026-07-05 17:25:46,091 | INFO | TRAINING FINISHED SUCCESSFULLY
+2026-07-05 17:25:46,091 | INFO | ============================================================
