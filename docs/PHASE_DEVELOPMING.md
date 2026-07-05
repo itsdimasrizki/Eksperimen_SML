@@ -10,7 +10,8 @@ Phase 3 : Implementation
     - eksperiment.ipynb      [V]
     - modelling.py           [V]
     - automate.py            [V]
-    - MLflow
+    - model_tuning.py        [V]
+    - MLflow                 [V]
 
 Phase 4 : Integration
     - CI/CD

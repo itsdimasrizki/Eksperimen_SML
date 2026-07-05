@@ -7,9 +7,9 @@
 
 ## Kriteria 2
 - [V] modelling.py
-- [ ] modelling_tuning.py
-- [ ] MLflow screenshot
-- [ ] Artifact screenshot
+- [V] modelling_tuning.py
+- [V] MLflow screenshot
+- [V] Artifact screenshot
 
 ## Kriteria 3
 - [ ] MLProject

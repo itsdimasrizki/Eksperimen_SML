@@ -1,0 +1,58 @@
+artifact_path: /home/lazy4u/Projects/Eksperimen_SML/mlruns/1/models/m-1839bce1176245feb65dba4f7100e22b/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.14.4
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.0
+    skops_trusted_types: null
+is_signature_from_type_hint: false
+mlflow_version: 3.14.0
+model_id: m-1839bce1176245feb65dba4f7100e22b
+model_size_bytes: 2275327
+model_uuid: m-1839bce1176245feb65dba4f7100e22b
+prompts: null
+run_id: 16a9f00bb6474aa09b5e00ee4559383b
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "numerical__age", "required": true}, {"type":
+    "double", "name": "numerical__trestbps", "required": true}, {"type": "double",
+    "name": "numerical__chol", "required": true}, {"type": "double", "name": "numerical__thalach",
+    "required": true}, {"type": "double", "name": "numerical__oldpeak", "required":
+    true}, {"type": "double", "name": "categorical__sex_0", "required": true}, {"type":
+    "double", "name": "categorical__sex_1", "required": true}, {"type": "double",
+    "name": "categorical__cp_0", "required": true}, {"type": "double", "name": "categorical__cp_1",
+    "required": true}, {"type": "double", "name": "categorical__cp_2", "required":
+    true}, {"type": "double", "name": "categorical__cp_3", "required": true}, {"type":
+    "double", "name": "categorical__fbs_0", "required": true}, {"type": "double",
+    "name": "categorical__fbs_1", "required": true}, {"type": "double", "name": "categorical__restecg_0",
+    "required": true}, {"type": "double", "name": "categorical__restecg_1", "required":
+    true}, {"type": "double", "name": "categorical__restecg_2", "required": true},
+    {"type": "double", "name": "categorical__exang_0", "required": true}, {"type":
+    "double", "name": "categorical__exang_1", "required": true}, {"type": "double",
+    "name": "categorical__slope_0", "required": true}, {"type": "double", "name":
+    "categorical__slope_1", "required": true}, {"type": "double", "name": "categorical__slope_2",
+    "required": true}, {"type": "double", "name": "categorical__ca_0", "required":
+    true}, {"type": "double", "name": "categorical__ca_1", "required": true}, {"type":
+    "double", "name": "categorical__ca_2", "required": true}, {"type": "double", "name":
+    "categorical__ca_3", "required": true}, {"type": "double", "name": "categorical__ca_4",
+    "required": true}, {"type": "double", "name": "categorical__thal_0", "required":
+    true}, {"type": "double", "name": "categorical__thal_1", "required": true}, {"type":
+    "double", "name": "categorical__thal_2", "required": true}, {"type": "double",
+    "name": "categorical__thal_3", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-07-05 11:20:33.933859'

@@ -1,0 +1,170 @@
+2026-07-05 18:01:57,524 | INFO | ============================================================
+2026-07-05 18:01:57,524 | INFO | STARTING MLFLOW TRACKING
+2026-07-05 18:01:57,524 | INFO | ============================================================
+2026-07-05 18:01:57,524 | INFO | Project directories initialized.
+2026-07-05 18:01:57,524 | INFO | Initializing MLflow...
+2026-07-05 18:01:57,526 | ERROR | Unexpected error occurred.
+Traceback (most recent call last):
+  File "/home/lazy4u/Projects/Eksperimen_SML/src/mlflow_tracking.py", line 1291, in main
+    run_pipeline()
+    ~~~~~~~~~~~~^^
+  File "/home/lazy4u/Projects/Eksperimen_SML/src/mlflow_tracking.py", line 1222, in run_pipeline
+    initialize_mlflow()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/home/lazy4u/Projects/Eksperimen_SML/src/mlflow_tracking.py", line 392, in initialize_mlflow
+    mlflow.set_experiment(
+    ~~~~~~~~~~~~~~~~~~~~~^
+        EXPERIMENT_NAME,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lazy4u/Projects/Eksperimen_SML/.venv/lib/python3.14/site-packages/mlflow/tracking/fluent.py", line 203, in set_experiment
+    client = TrackingServiceClient(_resolve_tracking_uri())
+  File "/home/lazy4u/Projects/Eksperimen_SML/.venv/lib/python3.14/site-packages/mlflow/tracking/_tracking_service/client.py", line 98, in __init__
+    self.store
+  File "/home/lazy4u/Projects/Eksperimen_SML/.venv/lib/python3.14/site-packages/mlflow/tracking/_tracking_service/client.py", line 102, in store
+    return utils._get_store(self.tracking_uri)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/lazy4u/Projects/Eksperimen_SML/.venv/lib/python3.14/site-packages/mlflow/tracking/_tracking_service/utils.py", line 270, in _get_store
+    return _tracking_store_registry.get_store(store_uri, artifact_uri)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lazy4u/Projects/Eksperimen_SML/.venv/lib/python3.14/site-packages/mlflow/tracking/_tracking_service/registry.py", line 45, in get_store
+    return self._get_store_with_resolved_uri(resolved_store_uri, artifact_uri)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lazy4u/Projects/Eksperimen_SML/.venv/lib/python3.14/site-packages/mlflow/tracking/_tracking_service/registry.py", line 56, in _get_store_with_resolved_uri
+    return builder(store_uri=resolved_store_uri, artifact_uri=artifact_uri)
+  File "/home/lazy4u/Projects/Eksperimen_SML/.venv/lib/python3.14/site-packages/mlflow/tracking/_tracking_service/utils.py", line 184, in _get_file_store
+    return FileStore(store_uri, store_uri)
+  File "/home/lazy4u/Projects/Eksperimen_SML/.venv/lib/python3.14/site-packages/mlflow/store/tracking/file_store.py", line 225, in __init__
+    raise MlflowException(
+    ...<9 lines>...
+    )
+mlflow.exceptions.MlflowException: The filesystem tracking backend (e.g., './mlruns') is in maintenance mode and will not receive further updates. Please migrate to a database backend (e.g., 'sqlite:///mlflow.db') to access the latest MLflow features. The `mlflow migrate-filestore` tool migrates your existing data losslessly. See https://mlflow.org/docs/latest/self-hosting/migrate-from-file-store for migration guidance. If the filesystem backend is required for your workflow, set `MLFLOW_ALLOW_FILE_STORE=true` to opt out of this exception.
+2026-07-05 18:07:21,886 | INFO | ============================================================
+2026-07-05 18:07:21,886 | INFO | STARTING MLFLOW TRACKING
+2026-07-05 18:07:21,886 | INFO | ============================================================
+2026-07-05 18:07:21,886 | INFO | Project directories initialized.
+2026-07-05 18:07:21,886 | INFO | Initializing MLflow...
+2026-07-05 18:07:23,531 | INFO | Tracking URI : sqlite:////home/lazy4u/Projects/Eksperimen_SML/mlflow.db
+2026-07-05 18:07:23,531 | INFO | Experiment : heart_disease_prediction
+2026-07-05 18:07:23,531 | INFO | Loading processed datasets...
+2026-07-05 18:07:23,533 | INFO | Loaded DataFrame: X_train.csv (211, 30)
+2026-07-05 18:07:23,535 | INFO | Loaded DataFrame: X_val.csv (45, 30)
+2026-07-05 18:07:23,537 | INFO | Loaded DataFrame: X_test.csv (46, 30)
+2026-07-05 18:07:23,538 | INFO | Loaded DataFrame: y_train.csv (211, 1)
+2026-07-05 18:07:23,539 | INFO | Loaded DataFrame: y_val.csv (45, 1)
+2026-07-05 18:07:23,540 | INFO | Loaded DataFrame: y_test.csv (46, 1)
+2026-07-05 18:07:23,540 | INFO | Processed datasets loaded successfully.
+2026-07-05 18:07:23,540 | INFO | Train shape : (211, 30)
+2026-07-05 18:07:23,540 | INFO | Validation shape : (45, 30)
+2026-07-05 18:07:23,540 | INFO | Test shape : (46, 30)
+2026-07-05 18:07:23,540 | INFO | Tracking baseline experiment...
+2026-07-05 18:07:23,540 | INFO | ============================================================
+2026-07-05 18:07:23,540 | INFO | LOGGING BASELINE MODEL
+2026-07-05 18:07:23,540 | INFO | ============================================================
+2026-07-05 18:07:23,540 | INFO | Loading artifact: baseline_model.pkl
+2026-07-05 18:07:24,031 | INFO | Loading JSON: metrics.json
+2026-07-05 18:07:24,032 | INFO | Loading JSON: model_metadata.json
+2026-07-05 18:07:24,405 | INFO | Metadata tags logged.
+2026-07-05 18:07:24,418 | INFO | Logged 7 parameters.
+2026-07-05 18:07:24,428 | INFO | Logged 5 metrics.
+2026-07-05 18:07:24,428 | INFO | Logging baseline artifacts...
+2026-07-05 18:07:24,438 | INFO | Logged artifact: metrics.json
+2026-07-05 18:07:24,439 | INFO | Logged artifact: model_metadata.json
+2026-07-05 18:07:24,440 | INFO | Logged artifact: classification_report.txt
+2026-07-05 18:07:24,440 | INFO | Logged artifact: confusion_matrix.png
+2026-07-05 18:07:24,441 | INFO | Logged artifact: roc_curve.png
+2026-07-05 18:07:24,441 | INFO | Baseline artifacts logged.
+2026-07-05 18:07:24,447 | INFO | Model size : 0.59 MB
+2026-07-05 18:07:30,715 | INFO | Logged model: baseline_model
+2026-07-05 18:07:30,722 | INFO | Baseline tracking completed.
+2026-07-05 18:07:30,722 | INFO | Tracking tuned experiment...
+2026-07-05 18:07:30,722 | INFO | ============================================================
+2026-07-05 18:07:30,722 | INFO | LOGGING TUNED MODEL
+2026-07-05 18:07:30,722 | INFO | ============================================================
+2026-07-05 18:07:30,723 | INFO | Loading artifact: best_model.pkl
+2026-07-05 18:07:30,734 | INFO | Loading JSON: tuning_metrics.json
+2026-07-05 18:07:30,734 | INFO | Loading JSON: best_model_metadata.json
+2026-07-05 18:07:30,825 | INFO | Metadata tags logged.
+2026-07-05 18:07:30,835 | INFO | Logged 10 parameters.
+2026-07-05 18:07:30,843 | INFO | Logged 5 metrics.
+2026-07-05 18:07:30,843 | INFO | Logging tuned artifacts...
+2026-07-05 18:07:30,848 | INFO | Logged artifact: tuning_metrics.json
+2026-07-05 18:07:30,848 | INFO | Logged artifact: best_model_metadata.json
+2026-07-05 18:07:30,849 | INFO | Logged artifact: tuning_classification_report.txt
+2026-07-05 18:07:30,850 | INFO | Logged artifact: tuning_confusion_matrix.png
+2026-07-05 18:07:30,850 | INFO | Logged artifact: tuning_roc_curve.png
+2026-07-05 18:07:30,850 | INFO | Tuned artifacts logged.
+2026-07-05 18:07:30,856 | INFO | Model size : 0.59 MB
+2026-07-05 18:07:34,591 | INFO | Logged model: best_model
+2026-07-05 18:07:34,599 | INFO | Tuned tracking completed.
+2026-07-05 18:07:34,599 | INFO | Registering best model...
+2026-07-05 18:07:34,671 | INFO | Registered model version 1
+2026-07-05 18:07:34,671 | INFO | ============================================================
+2026-07-05 18:07:34,671 | INFO | MLFLOW TRACKING FINISHED
+2026-07-05 18:07:34,671 | INFO | ============================================================
+2026-07-05 18:07:34,671 | INFO | Pipeline finished in 12.79 seconds.
+2026-07-05 18:20:26,427 | INFO | ============================================================
+2026-07-05 18:20:26,428 | INFO | STARTING MLFLOW TRACKING
+2026-07-05 18:20:26,428 | INFO | ============================================================
+2026-07-05 18:20:26,428 | INFO | Project directories initialized.
+2026-07-05 18:20:26,428 | INFO | Initializing MLflow...
+2026-07-05 18:20:26,766 | INFO | Tracking URI : sqlite:////home/lazy4u/Projects/Eksperimen_SML/mlflow.db
+2026-07-05 18:20:26,767 | INFO | Experiment : heart_disease_prediction
+2026-07-05 18:20:26,767 | INFO | Loading processed datasets...
+2026-07-05 18:20:26,769 | INFO | Loaded DataFrame: X_train.csv (211, 30)
+2026-07-05 18:20:26,770 | INFO | Loaded DataFrame: X_val.csv (45, 30)
+2026-07-05 18:20:26,771 | INFO | Loaded DataFrame: X_test.csv (46, 30)
+2026-07-05 18:20:26,772 | INFO | Loaded DataFrame: y_train.csv (211, 1)
+2026-07-05 18:20:26,773 | INFO | Loaded DataFrame: y_val.csv (45, 1)
+2026-07-05 18:20:26,774 | INFO | Loaded DataFrame: y_test.csv (46, 1)
+2026-07-05 18:20:26,774 | INFO | Processed datasets loaded successfully.
+2026-07-05 18:20:26,774 | INFO | Train shape : (211, 30)
+2026-07-05 18:20:26,774 | INFO | Validation shape : (45, 30)
+2026-07-05 18:20:26,774 | INFO | Test shape : (46, 30)
+2026-07-05 18:20:26,774 | INFO | Tracking baseline experiment...
+2026-07-05 18:20:26,774 | INFO | ============================================================
+2026-07-05 18:20:26,774 | INFO | LOGGING BASELINE MODEL
+2026-07-05 18:20:26,774 | INFO | ============================================================
+2026-07-05 18:20:26,774 | INFO | Loading artifact: baseline_model.pkl
+2026-07-05 18:20:27,237 | INFO | Loading JSON: metrics.json
+2026-07-05 18:20:27,238 | INFO | Loading JSON: model_metadata.json
+2026-07-05 18:20:27,505 | INFO | Metadata tags logged.
+2026-07-05 18:20:27,514 | INFO | Logged 7 parameters.
+2026-07-05 18:20:27,525 | INFO | Logged 5 metrics.
+2026-07-05 18:20:27,525 | INFO | Logging baseline artifacts...
+2026-07-05 18:20:27,533 | INFO | Logged artifact: metrics.json
+2026-07-05 18:20:27,534 | INFO | Logged artifact: model_metadata.json
+2026-07-05 18:20:27,534 | INFO | Logged artifact: classification_report.txt
+2026-07-05 18:20:27,535 | INFO | Logged artifact: confusion_matrix.png
+2026-07-05 18:20:27,535 | INFO | Logged artifact: roc_curve.png
+2026-07-05 18:20:27,535 | INFO | Baseline artifacts logged.
+2026-07-05 18:20:27,541 | INFO | Model size : 0.59 MB
+2026-07-05 18:20:33,763 | INFO | Logged model: baseline_model
+2026-07-05 18:20:33,770 | INFO | Baseline tracking completed.
+2026-07-05 18:20:33,770 | INFO | Tracking tuned experiment...
+2026-07-05 18:20:33,770 | INFO | ============================================================
+2026-07-05 18:20:33,770 | INFO | LOGGING TUNED MODEL
+2026-07-05 18:20:33,770 | INFO | ============================================================
+2026-07-05 18:20:33,770 | INFO | Loading artifact: best_model.pkl
+2026-07-05 18:20:33,782 | INFO | Loading JSON: tuning_metrics.json
+2026-07-05 18:20:33,782 | INFO | Loading JSON: best_model_metadata.json
+2026-07-05 18:20:33,862 | INFO | Metadata tags logged.
+2026-07-05 18:20:33,869 | INFO | Logged 10 parameters.
+2026-07-05 18:20:33,875 | INFO | Logged 5 metrics.
+2026-07-05 18:20:33,875 | INFO | Logging tuned artifacts...
+2026-07-05 18:20:33,881 | INFO | Logged artifact: tuning_metrics.json
+2026-07-05 18:20:33,882 | INFO | Logged artifact: best_model_metadata.json
+2026-07-05 18:20:33,882 | INFO | Logged artifact: tuning_classification_report.txt
+2026-07-05 18:20:33,883 | INFO | Logged artifact: tuning_confusion_matrix.png
+2026-07-05 18:20:33,883 | INFO | Logged artifact: tuning_roc_curve.png
+2026-07-05 18:20:33,883 | INFO | Tuned artifacts logged.
+2026-07-05 18:20:33,889 | INFO | Model size : 0.59 MB
+2026-07-05 18:20:37,812 | INFO | Logged model: best_model
+2026-07-05 18:20:37,818 | INFO | Tuned tracking completed.
+2026-07-05 18:20:37,818 | INFO | Registering best model...
+2026-07-05 18:20:37,900 | INFO | Registered model version 2
+2026-07-05 18:20:37,900 | INFO | ============================================================
+2026-07-05 18:20:37,900 | INFO | MLFLOW TRACKING FINISHED
+2026-07-05 18:20:37,900 | INFO | ============================================================
+2026-07-05 18:20:37,900 | INFO | Pipeline finished in 11.47 seconds.

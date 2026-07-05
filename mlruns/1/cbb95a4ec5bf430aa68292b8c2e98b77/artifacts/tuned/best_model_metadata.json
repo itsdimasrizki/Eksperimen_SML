@@ -1,0 +1,65 @@
+{
+    "model_name": "RandomForestClassifier",
+    "version": "tuned",
+    "random_state": 42,
+    "training_timestamp": "2026-07-05T17:35:42.724306",
+    "training_time_seconds": 6.6476,
+    "cv_best_score": 0.8602173913043478,
+    "best_parameters": {
+        "n_estimators": 500,
+        "min_samples_split": 5,
+        "min_samples_leaf": 1,
+        "max_features": "log2",
+        "max_depth": 20,
+        "bootstrap": true
+    },
+    "train_shape": [
+        211,
+        30
+    ],
+    "validation_shape": [
+        45,
+        30
+    ],
+    "test_shape": [
+        46,
+        30
+    ],
+    "feature_names": [
+        "numerical__age",
+        "numerical__trestbps",
+        "numerical__chol",
+        "numerical__thalach",
+        "numerical__oldpeak",
+        "categorical__sex_0",
+        "categorical__sex_1",
+        "categorical__cp_0",
+        "categorical__cp_1",
+        "categorical__cp_2",
+        "categorical__cp_3",
+        "categorical__fbs_0",
+        "categorical__fbs_1",
+        "categorical__restecg_0",
+        "categorical__restecg_1",
+        "categorical__restecg_2",
+        "categorical__exang_0",
+        "categorical__exang_1",
+        "categorical__slope_0",
+        "categorical__slope_1",
+        "categorical__slope_2",
+        "categorical__ca_0",
+        "categorical__ca_1",
+        "categorical__ca_2",
+        "categorical__ca_3",
+        "categorical__ca_4",
+        "categorical__thal_0",
+        "categorical__thal_1",
+        "categorical__thal_2",
+        "categorical__thal_3"
+    ],
+    "accuracy": 0.7391304347826086,
+    "precision": 0.8421052631578947,
+    "recall": 0.64,
+    "f1_score": 0.7272727272727273,
+    "roc_auc": 0.8466666666666667
+}
