@@ -23,19 +23,29 @@ from fastapi.responses import JSONResponse
 
 from inference import InferenceService
 
+# from prometheus_exporter import (
+#     metrics_endpoint,
+# )
+
+# from monitoring.monitoring_helper import (
+#     record_request,
+#     register_model,
+#     record_prediction,
+#     record_error,
+#     record_latency,
+# )
+
+# from monitoring.collectors import (
+#     collect_system_metrics,
+# )
+
 from prometheus_exporter import (
     metrics_endpoint,
-)
-
-from monitoring.monitoring_helper import (
     record_request,
     register_model,
     record_prediction,
     record_error,
     record_latency,
-)
-
-from monitoring.collectors import (
     collect_system_metrics,
 )
 
