@@ -7,7 +7,25 @@
         "duplicated_columns": [],
         "is_valid": true
     },
-    "missing_values": null,
+    "missing_values": {
+        "total_missing": 0,
+        "missing_per_column": {
+            "age": 0,
+            "sex": 0,
+            "cp": 0,
+            "trestbps": 0,
+            "chol": 0,
+            "fbs": 0,
+            "restecg": 0,
+            "thalach": 0,
+            "exang": 0,
+            "oldpeak": 0,
+            "slope": 0,
+            "ca": 0,
+            "thal": 0,
+            "target": 0
+        }
+    },
     "duplicates": {
         "duplicate_rows": 723,
         "rows_before": 1025,

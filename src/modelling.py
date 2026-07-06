@@ -28,6 +28,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import mlflow
+
 import joblib
 import matplotlib.pyplot as plt
 import numpy as np
@@ -884,6 +886,7 @@ def run_pipeline() -> None:
     """
     Execute complete training pipeline.
     """
+    mlflow.autolog()
 
     start = time.perf_counter()
 
